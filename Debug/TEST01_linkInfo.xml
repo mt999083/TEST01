@@ -2,12 +2,12 @@
 <link_info>
    <banner>TMS320C2000 Linker PC v16.9.1.LTS</banner>
    <copyright>Copyright (c) 1996-2015 Texas Instruments Incorporated</copyright>
-   <link_time>0x5ec9f364</link_time>
+   <link_time>0x5eca12ed</link_time>
    <link_errors>0x0</link_errors>
    <output_file>TEST01.out</output_file>
    <entry_point>
       <name>_c_int00</name>
-      <address>0x879d</address>
+      <address>0x87a1</address>
    </entry_point>
    <input_file_list>
       <input_file id="fl-2">
@@ -244,27 +244,27 @@
          <name>.text</name>
          <load_address>0x8000</load_address>
          <run_address>0x8000</run_address>
-         <size>0x462</size>
+         <size>0x466</size>
          <input_file_ref idref="fl-e"/>
       </object_component>
       <object_component id="oc-193">
          <name>.text</name>
-         <load_address>0x8462</load_address>
-         <run_address>0x8462</run_address>
+         <load_address>0x8466</load_address>
+         <run_address>0x8466</run_address>
          <size>0x33b</size>
          <input_file_ref idref="fl-c"/>
       </object_component>
       <object_component id="oc-88">
          <name>.text</name>
-         <load_address>0x879d</load_address>
-         <run_address>0x879d</run_address>
+         <load_address>0x87a1</load_address>
+         <run_address>0x87a1</run_address>
          <size>0x56</size>
          <input_file_ref idref="fl-15"/>
       </object_component>
       <object_component id="oc-19a">
          <name>.text</name>
-         <load_address>0x87f3</load_address>
-         <run_address>0x87f3</run_address>
+         <load_address>0x87f7</load_address>
+         <run_address>0x87f7</run_address>
          <size>0x9</size>
          <input_file_ref idref="fl-24"/>
       </object_component>
@@ -2197,7 +2197,7 @@
          <name>.text.2</name>
          <load_address>0x8000</load_address>
          <run_address>0x8000</run_address>
-         <size>0x7fc</size>
+         <size>0x800</size>
          <contents>
             <object_component_ref idref="oc-18f"/>
             <object_component_ref idref="oc-193"/>
@@ -3533,19 +3533,15 @@
          <page_id>0x0</page_id>
          <origin>0x8000</origin>
          <length>0x800</length>
-         <used_space>0x7fc</used_space>
-         <unused_space>0x4</unused_space>
+         <used_space>0x800</used_space>
+         <unused_space>0x0</unused_space>
          <attributes>RWIX</attributes>
          <usage_details>
             <allocated_space>
                <start_address>0x8000</start_address>
-               <size>0x7fc</size>
+               <size>0x800</size>
                <logical_group_ref idref="lg-22e"/>
             </allocated_space>
-            <available_space>
-               <start_address>0x87fc</start_address>
-               <size>0x4</size>
-            </available_space>
          </usage_details>
       </memory_area>
       <memory_area display="yes" color="green">
@@ -7081,102 +7077,102 @@
       </symbol>
       <symbol id="sm-44a">
          <name>_InitSysPll</name>
-         <value>0x8564</value>
+         <value>0x8568</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-44b">
          <name>_SeizeFlashPump</name>
-         <value>0x852f</value>
+         <value>0x8533</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-44c">
          <name>_DisablePeripheralClocks</name>
-         <value>0x8517</value>
+         <value>0x851b</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-44d">
          <name>_DisableDog</name>
-         <value>0x8556</value>
+         <value>0x855a</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-44e">
          <name>_SysIntOsc2Sel</name>
-         <value>0x871d</value>
+         <value>0x8721</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-44f">
          <name>_ReleaseFlashPump</name>
-         <value>0x853e</value>
+         <value>0x8542</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-450">
          <name>_HALT</name>
-         <value>0x8767</value>
+         <value>0x876b</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-451">
          <name>_IDLE</name>
-         <value>0x8753</value>
+         <value>0x8757</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-452">
          <name>_InitPeripheralClocks</name>
-         <value>0x8493</value>
+         <value>0x8497</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-453">
          <name>_SysXtalOscSel</name>
-         <value>0x8727</value>
+         <value>0x872b</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-454">
          <name>_CsmUnlock</name>
-         <value>0x86f2</value>
+         <value>0x86f6</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-455">
          <name>_SysIntOsc1Sel</name>
-         <value>0x8713</value>
+         <value>0x8717</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-456">
          <name>_ServiceDog</name>
-         <value>0x8548</value>
+         <value>0x854c</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-457">
          <name>_HIB</name>
-         <value>0x8780</value>
+         <value>0x8784</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-458">
          <name>_AuxAuxClkSel</name>
-         <value>0x8749</value>
+         <value>0x874d</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-459">
          <name>_AuxIntOsc2Sel</name>
-         <value>0x8733</value>
+         <value>0x8737</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-45a">
          <name>_InitAuxPll</name>
-         <value>0x862a</value>
+         <value>0x862e</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-45b">
          <name>_InitSysCtrl</name>
-         <value>0x8462</value>
+         <value>0x8466</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-45c">
          <name>_STANDBY</name>
-         <value>0x875c</value>
+         <value>0x8760</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-45d">
          <name>_AuxXtalOscSel</name>
-         <value>0x873d</value>
+         <value>0x8741</value>
          <object_component_ref idref="oc-193"/>
       </symbol>
       <symbol id="sm-469">
@@ -7191,7 +7187,7 @@
       </symbol>
       <symbol id="sm-488">
          <name>_ConfigureADC</name>
-         <value>0x841c</value>
+         <value>0x8420</value>
          <object_component_ref idref="oc-18f"/>
       </symbol>
       <symbol id="sm-489">
@@ -7256,7 +7252,7 @@
       </symbol>
       <symbol id="sm-495">
          <name>_InitEPwm2Example</name>
-         <value>0x83eb</value>
+         <value>0x83ef</value>
          <object_component_ref idref="oc-18f"/>
       </symbol>
       <symbol id="sm-496">
@@ -7311,12 +7307,12 @@
       </symbol>
       <symbol id="sm-4a0">
          <name>_InitEPwm1Example</name>
-         <value>0x83ba</value>
+         <value>0x83be</value>
          <object_component_ref idref="oc-18f"/>
       </symbol>
       <symbol id="sm-4a1">
          <name>_GPIOsetup</name>
-         <value>0x83a6</value>
+         <value>0x83aa</value>
          <object_component_ref idref="oc-18f"/>
       </symbol>
       <symbol id="sm-4a2">
@@ -7331,7 +7327,7 @@
       </symbol>
       <symbol id="sm-4a4">
          <name>_SetupADCSoftware</name>
-         <value>0x8440</value>
+         <value>0x8444</value>
          <object_component_ref idref="oc-18f"/>
       </symbol>
       <symbol id="sm-4a5">
@@ -7351,7 +7347,7 @@
       </symbol>
       <symbol id="sm-4c9">
          <name>_c_int00</name>
-         <value>0x879d</value>
+         <value>0x87a1</value>
          <object_component_ref idref="oc-88"/>
       </symbol>
       <symbol id="sm-4ca">
@@ -7471,17 +7467,17 @@
       </symbol>
       <symbol id="sm-5c1">
          <name>__register_lock</name>
-         <value>0x87f7</value>
+         <value>0x87fb</value>
          <object_component_ref idref="oc-19a"/>
       </symbol>
       <symbol id="sm-5c2">
          <name>__nop</name>
-         <value>0x87fb</value>
+         <value>0x87ff</value>
          <object_component_ref idref="oc-19a"/>
       </symbol>
       <symbol id="sm-5c3">
          <name>__register_unlock</name>
-         <value>0x87f3</value>
+         <value>0x87f7</value>
          <object_component_ref idref="oc-19a"/>
       </symbol>
       <symbol id="sm-5d2">
