@@ -66,7 +66,7 @@ DINT;
    IER |= M_INT1;
    IER |= M_INT13;
    IER |= M_INT14;
-// Enable TINT0 in the PIE: Group 1 interrupt 7
+// Enable TINT0 in the PIE: Group 1 interrupt 7 111
 //
    PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
 // Enable global Interrupts and higher priority real-time debug events:
@@ -209,7 +209,7 @@ void SPLL_1ph_SOGI_IQ_FUNC(SPLL_1ph_SOGI_IQ *spll_obj)
         spll_obj->theta[0]=(0.0);
 
     spll_obj->theta[1]=spll_obj->theta[0];
-    spll_obj->theta[0]=( int )spll_obj->theta[0]*2047 / 6.28 ;
+    spll_obj->theta[0]=( int )spll_obj->theta[0]*2047 / (2*PI) ;
     spll_obj->sin=sin_tab[(spll_obj->theta[0])]; // sin
     if((spll_obj->theta[0])<=1535)
         {
@@ -311,7 +311,7 @@ __interrupt void cpu_timer1_isr(void)
 
      index = goc*2047 / (2*PI) ;
 
-
+// index 0 - > 2047 ; 50hz
 
    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
