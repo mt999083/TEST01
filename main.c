@@ -5,6 +5,7 @@
 
 extern float sin_tab[];
 void GPIOsetup(void);
+void ConfigureDAC(void);
 __interrupt void cpu_timer0_isr(void);
 __interrupt void cpu_timer1_isr(void);
 __interrupt void cpu_timer2_isr(void);
@@ -16,7 +17,9 @@ int count=0;
 int AdcaResult0 = 0, doc_adc = 0, AdcaResult1= 0, m = 0, index =0;
 double sinfunc = 0.0, goc = 0.0, D_alpha = 0.0, tanso = 0.0;
 int SINUP ;
+int goc_input = 0 ;
 int SINLOW;
+double AC_input = 0;
 int i =0;
 //------------------------------------------------
 
@@ -29,7 +32,7 @@ float delta_T  ;
 float wn   ;
 SPLL_1ph_SOGI_IQ spll;
 
-//void heso_osg_intit(int FG ,int FS);
+//void heso_osg_intit(int FG ,int FS); 1234321
 
 //=============================
 void main(void)
@@ -42,6 +45,7 @@ InitEPwm1Gpio();
 InitEPwm2Gpio();
 SetupADCSoftware();
 ConfigureADC();
+ConfigureDAC();
 DINT;
    InitPieCtrl();
    IER = 0x0000;
@@ -57,7 +61,7 @@ DINT;
    InitEPwm2Example();
 // 200MHz CPU Freq, 1 second Period (in uSeconds)
    ConfigCpuTimer(&CpuTimer0, 200, 50);
-   ConfigCpuTimer(&CpuTimer1, 200, 20000);
+   ConfigCpuTimer(&CpuTimer1, 200, 10);
    ConfigCpuTimer(&CpuTimer2, 200, 1000000);
    CpuTimer0Regs.TCR.all = 0x4000;
    CpuTimer1Regs.TCR.all = 0x4000;
@@ -78,11 +82,13 @@ DINT;
 
 while(1)
    {
-    AdcaRegs.ADCSOCFRC1.all = 0x0003; //SOC0 and SOC1
-    while(AdcaRegs.ADCINTFLG.bit.ADCINT1 == 0);
-    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
-    AdcaResult0 = AdcaResultRegs.ADCRESULT0;
-    AdcaResult1 = AdcaResultRegs.ADCRESULT1;
+    DacaRegs.DACVALS.all = spll.theta[0] * 1000 + 1500  ;
+    DacbRegs.DACVALS.all = AC_input * 2000 + 2000 ;
+//    AdcaRegs.ADCSOCFRC1.all = 0x0003; //SOC0 and SOC1
+//    while(AdcaRegs.ADCINTFLG.bit.ADCINT1 == 0);
+//    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
+//    AdcaResult0 = AdcaResultRegs.ADCRESULT0;
+//    AdcaResult1 = AdcaResultRegs.ADCRESULT1;
     SPLL_1ph_SOGI_IQ_coeff_update( 1.0/20000.0 ,  2.0*3.14159265359*50, &spll);
 
 //    SPLL_1ph_SOGI_IQ_coeff_update(((float)(1.0/ISR_FREQUENCY)),(float)(2*PI*GRID_FREQ),&spll1);
@@ -206,20 +212,21 @@ void SPLL_1ph_SOGI_IQ_FUNC(SPLL_1ph_SOGI_IQ *spll_obj)
 
     spll_obj->theta[0]=spll_obj->theta[1]+ ( (spll_obj->fo*spll_obj->delta_T)* ((2.0)*(3.1415926)));
     if(spll_obj->theta[0]>(2*3.1415926))
-        spll_obj->theta[0]=(0.0);
+       spll_obj->theta[0]=(0.0);
 
     spll_obj->theta[1]=spll_obj->theta[0];
     spll_obj->theta[0]=( int )spll_obj->theta[0]*2047 / (2*PI) ;
     spll_obj->sin=sin_tab[(spll_obj->theta[0])]; // sin
+
     if((spll_obj->theta[0])<=1535)
-        {
+
             spll_obj->cos=sin_tab[(spll_obj->theta[0]) + 512 ];
 
-        }
-        else
-        {
+
+    else
+
             spll_obj->cos=sin_tab[spll_obj->theta[0]-1535];
-        }
+
 
 }
 
@@ -301,7 +308,7 @@ __interrupt void cpu_timer0_isr(void)
 __interrupt void cpu_timer1_isr(void)
 {
    CpuTimer1.InterruptCount++;
-   D_alpha= 0.02 * 2 * PI* 50 ;
+   D_alpha= 0.00001 * 2 * PI* 60 ;
 
      if ( goc <= 2*PI)
          goc = goc + D_alpha;
@@ -309,8 +316,9 @@ __interrupt void cpu_timer1_isr(void)
       goc = 0;
      // chuyen sang so nguyen duong : 2pi <--> 2047 ; goc <----> index
 
-     index = goc*2047 / (2*PI) ;
-
+     index = goc*2047 /(2*PI) ;
+     goc_input = goc*2047 /(2*PI);
+     AC_input = sin_tab[goc_input];
 // index 0 - > 2047 ; 50hz
 
    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -414,6 +422,25 @@ void SetupADCSoftware(void)
     AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 1; //end of SOC1 will set INT1 flag
     AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
     AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
+    EDIS;
+}
+void ConfigureDAC(void)
+{
+    EALLOW;
+    DacbRegs.DACCTL.bit.DACREFSEL = 1;          // Use ADC references
+    DacbRegs.DACCTL.bit.LOADMODE = 0;           // Load on next SYSCLK
+                    // Set mid-range
+    DacbRegs.DACOUTEN.bit.DACOUTEN = 1;         // Enable DAC
+
+    DacaRegs.DACCTL.bit.DACREFSEL = 1;          // Use ADC references
+    DacaRegs.DACCTL.bit.LOADMODE = 0;           // Load on next SYSCLK
+                    // Set mid-range
+    DacaRegs.DACOUTEN.bit.DACOUTEN = 1;         // Enable DAC
+
+    DaccRegs.DACCTL.bit.DACREFSEL = 1;          // Use ADC references
+    DaccRegs.DACCTL.bit.LOADMODE = 0;           // Load on next SYSCLK
+                        // Set mid-range
+    DaccRegs.DACOUTEN.bit.DACOUTEN = 1;         // Enable DAC
     EDIS;
 }
 
